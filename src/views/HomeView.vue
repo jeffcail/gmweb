@@ -1,10 +1,26 @@
 <template>
   <div height="100%">
-    <el-container style="height: 100%;">
-      <el-aside width="200px" style="background-color: rgb(238, 241, 246); height: 100%; ">
-        <el-menu :default-openeds="['1', '3']" style="height: 100%;">
+    <el-container style="line-height: 100%;">
+      <el-aside :width="asideWidth+'px'" style="background-color: rgb(238, 241, 246); line-height: 100%;">
+        <el-menu :default-openeds="['1', '3']" style="height: 100%; overflow-x: hidden;" 
+                  background-color="rgb(48, 65, 86)"
+                  text-color="#fff"
+                  active-text-color="#ffd04b"
+                  :collapse-transition="false"
+                  :collapse="isCollapse"
+        >
+
+        <div style="line-height: 60px; text-align: center;">
+          <img src="../assets/logo.png" style="width: 20px; position: relative; top: 5px; margin-right: 8px;" />
+          <b style="color:white" v-show="logoTextShow">通用后台管理系统</b>
+        </div>
+
+
           <el-submenu index="1">
-            <template slot="title"><i class="el-icon-message"></i>导航一</template>
+            <template slot="title">
+              <i class="el-icon-message"></i>
+              <span slot="title">导航一</span>
+            </template>
             <el-menu-item-group>
               <template slot="title">分组一</template>
               <el-menu-item index="1-1">选项1</el-menu-item>
@@ -19,7 +35,10 @@
             </el-submenu>
           </el-submenu>
           <el-submenu index="2">
-            <template slot="title"><i class="el-icon-menu"></i>导航二</template>
+            <template slot="title">
+              <i class="el-icon-menu"></i>
+              <span slot="title">导航二</span>
+            </template>
             <el-menu-item-group>
               <template slot="title">分组一</template>
               <el-menu-item index="2-1">选项1</el-menu-item>
@@ -34,7 +53,10 @@
             </el-submenu>
           </el-submenu>
           <el-submenu index="3">
-            <template slot="title"><i class="el-icon-setting"></i>导航三</template>
+            <template slot="title">
+              <i class="el-icon-setting"></i>
+              <span slot="title">导航三</span>
+            </template>
             <el-menu-item-group>
               <template slot="title">分组一</template>
               <el-menu-item index="3-1">选项1</el-menu-item>
@@ -52,16 +74,21 @@
       </el-aside>
       
       <el-container>
-        <el-header style="text-align: right; font-size: 12px; border-bottom: 1px solid #ccc; line-height: 60px;">
-          <el-dropdown>
+        <el-header style="font-size: 12px; border-bottom: 1px solid #ccc; line-height: 60px; display: flex;">
+
+          <div style="flex: 1; font-size: 10px;">
+            <span :class="collapseBtnClass" style="cursor: pointer" @click="collapse"></span>
+          </div>
+
+          <el-dropdown style="width: 100px; cursor: pointer;">
+            <span>王小虎</span><i class="el-icon-arrow-down" style="margin-left: 5px;"></i>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>新增</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
+              <el-dropdown-item>个人信息</el-dropdown-item>
+              <el-dropdown-item>退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <span>王小虎</span>
+        
         </el-header>
         
         <el-main>
@@ -92,13 +119,32 @@ export default {
         address: '上海市普陀区金沙江路 1518 弄'
       };
       return {
-        tableData: Array(10).fill(item)
+        tableData: Array(10).fill(item),
+        collapseBtnClass: 'el-icon-s-fold',
+        isCollapse: false,
+        asideWidth: 200,
+        logoTextShow: true,
       }
     },
 
   name: 'HomeView',
   components: {
     HelloWorld
-  }
+  },
+
+  methods: {
+    collapse() {
+      this.isCollapse = !this.isCollapse;
+      if (this.isCollapse) {
+        this.asideWidth = 64;
+        this.collapseBtnClass = 'el-icon-s-unfold';
+        this.logoTextShow = false;
+      } else {
+        this.asideWidth = 200;
+        this.collapseBtnClass = 'el-icon-s-fold';
+        this.logoTextShow = true;
+      }
+    },
+  },
 }
 </script>
