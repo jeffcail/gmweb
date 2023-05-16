@@ -92,6 +92,21 @@
         </el-header>
         
         <el-main>
+
+          <div style="padding: 10px 0">
+            <el-input style="width: 200px" placeholder="请输入搜索的内容"></el-input>
+            <el-input style="width: 200px" placeholder="请输入搜索的内容" class="ml-5"></el-input>
+            <el-input style="width: 200px" placeholder="请输入搜索的内容" class="ml-5"></el-input>
+            <el-button class="ml-5" type="primary">搜索</el-button>
+          </div>
+
+          <div style="margin: 10px;">
+              <el-button type="primary">添加<i class="el-icon-circle-plus-outline"></i></el-button>
+              <el-button type="danger">批量删除<i class="el-icon-remove-outline"></i></el-button>
+              <el-button type="success">导入<i class="el-icon-top"></i></el-button>
+              <el-button type="success">导出<i class="el-icon-bottom"></i></el-button>
+          </div>
+
           <el-table :data="tableData">
             <el-table-column prop="date" label="日期" width="140">
             </el-table-column>
@@ -99,7 +114,24 @@
             </el-table-column>
             <el-table-column prop="address" label="地址">
             </el-table-column>
+            <el-table-column label="操作">
+              <el-button type="success">编辑<i class="el-icon-edit"></i></el-button>
+              <el-button type="danger">删除<i class="el-icon-remove-outline"></i></el-button>
+            </el-table-column>
           </el-table>
+
+          <div style="padding: 10px 0;">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage4"
+              :page-sizes="[100, 200, 300, 400]"
+              :page-size="100"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="400">
+            </el-pagination>
+          </div>
+
         </el-main>
       </el-container>
     </el-container>
