@@ -108,9 +108,15 @@
           </div>
 
           <el-table :data="tableData">
-            <el-table-column prop="date" label="日期" width="140">
+            <el-table-column prop="id" label="编号" width="140">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="120">
+            <el-table-column prop="username" label="用户名" width="140">
+            </el-table-column>
+            <el-table-column prop="nickname" label="昵称" width="120">
+            </el-table-column>
+            <el-table-column prop="email" label="邮箱" width="120">
+            </el-table-column>
+            <el-table-column prop="phone" label="手机号" width="120">
             </el-table-column>
             <el-table-column prop="address" label="地址">
             </el-table-column>
@@ -124,11 +130,11 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page="currentPage4"
-              :page-sizes="[100, 200, 300, 400]"
-              :page-size="100"
+              :current-page="pageNum"
+              :page-sizes="[2, 10, 20, 50]"
+              :page-size="pageSize"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="400">
+              :total="total">
             </el-pagination>
           </div>
 
@@ -145,13 +151,11 @@ import HelloWorld from '@/components/HelloWorld.vue'
 export default {
 
   data() {
-      const item = {
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      };
       return {
-        tableData: Array(10).fill(item),
+        tableData: [],
+        total: 0,
+        pageNum: 1,
+        pageSize: 2,
         collapseBtnClass: 'el-icon-s-fold',
         isCollapse: false,
         asideWidth: 200,
@@ -162,6 +166,10 @@ export default {
   name: 'HomeView',
   components: {
     HelloWorld
+  },
+
+  created() {
+    this.load();
   },
 
   methods: {
@@ -176,6 +184,24 @@ export default {
         this.collapseBtnClass = 'el-icon-s-fold';
         this.logoTextShow = true;
       }
+    },
+
+    load() {
+      fetch("http://localhost:9000/user/list/page?pageNum="+this.pageNum+"&pageSize="+this.pageSize).then(res => res.json()).then(res => {
+        this.tableData = res.data;
+        this.total = res.total;
+      });
+    },
+
+    handleCurrentChange(pageNum) {
+      // console.log(pageNum);
+      this.pageNum = pageNum;
+      this.load();
+    },
+    handleSizeChange(pageSize) {
+      // console.log(pageSize);
+      this.pageSize = pageSize;
+      this.load();
     },
   },
 }
