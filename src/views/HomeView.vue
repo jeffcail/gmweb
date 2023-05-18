@@ -94,10 +94,10 @@
         <el-main>
 
           <div style="padding: 10px 0">
-            <el-input style="width: 200px" placeholder="请输入搜索的内容"></el-input>
-            <el-input style="width: 200px" placeholder="请输入搜索的内容" class="ml-5"></el-input>
-            <el-input style="width: 200px" placeholder="请输入搜索的内容" class="ml-5"></el-input>
-            <el-button class="ml-5" type="primary">搜索</el-button>
+            <el-input style="width: 200px" placeholder="请输入搜索的内容" v-model="username"></el-input>
+            <!-- <el-input style="width: 200px" placeholder="请输入搜索的内容" class="ml-5"></el-input>
+            <el-input style="width: 200px" placeholder="请输入搜索的内容" class="ml-5"></el-input> -->
+            <el-button class="ml-5" type="primary" @click="searchUser">搜索</el-button>
           </div>
 
           <div style="margin: 10px;">
@@ -160,6 +160,7 @@ export default {
         isCollapse: false,
         asideWidth: 200,
         logoTextShow: true,
+        username: '',
       }
     },
 
@@ -187,7 +188,7 @@ export default {
     },
 
     load() {
-      fetch("http://localhost:9000/user/list/page?pageNum="+this.pageNum+"&pageSize="+this.pageSize).then(res => res.json()).then(res => {
+      fetch("http://localhost:9000/user/list/page?pageNum="+this.pageNum+"&pageSize="+this.pageSize+"&username="+this.username).then(res => res.json()).then(res => {
         this.tableData = res.data;
         this.total = res.total;
       });
@@ -201,6 +202,9 @@ export default {
     handleSizeChange(pageSize) {
       // console.log(pageSize);
       this.pageSize = pageSize;
+      this.load();
+    },
+    searchUser() {
       this.load();
     },
   },
