@@ -237,7 +237,7 @@ export default {
     },
 
     load() {
-      this.request.get("/user/list/page", {
+      this.request.get("/user/page", {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
@@ -280,7 +280,7 @@ export default {
       this.form = {}
     },
     save() {
-      this.request.post("/user/save", this.form).then(res => {
+      this.request.post("/user", this.form).then(res => {
         if (res) {
           this.$message.success("添加成功");
           this.dialogFormVisible = false;
