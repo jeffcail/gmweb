@@ -2,8 +2,6 @@
 
     <div>
 
-        
-        
         <div style="padding: 10px 0">
             <el-input style="width: 200px" placeholder="请输入搜索的用户名" v-model="username"></el-input>
             <el-input style="width: 200px; margin-left: 5px;" placeholder="请输入搜索的昵称" v-model="nickname"></el-input>
@@ -17,8 +15,11 @@
           <div style="margin: 10px;">
               <el-button type="primary" @click="handleAdd">添加<i class="el-icon-circle-plus-outline"></i></el-button>
               <el-button type="danger" @click="handleDatchDel">批量删除<i class="el-icon-remove-outline"></i></el-button>
-              <el-button type="success">导入<i class="el-icon-top"></i></el-button>
-              <el-button type="success">导出<i class="el-icon-bottom"></i></el-button>
+
+              <el-upload action="http://localhost:9000/user/import" style="display: inline-block;" :show-file-list="false" accept="xlsx" :on-success="handleExcelImportS">
+                <el-button type="success" class="ml-5">导入<i class="el-icon-top"></i></el-button>
+              </el-upload>
+              <el-button type="success" @click="handlerExport" class="ml-5">导出<i class="el-icon-bottom"></i></el-button>
           </div>
 
           <el-table :data="tableData"  @selection-change="handleSelectionChange">
@@ -103,7 +104,7 @@ export default {
             tableData: [],
             total: 0,
             pageNum: 1,
-            pageSize: 2,
+            pageSize: 10,
             username: '',
             email: '',
             nickname: '',
@@ -204,7 +205,15 @@ export default {
             } else {
                 this.$message.error("删除失败");
             }
-        })
+          })
+        },
+        handlerExport() {
+          window.open("http://localhost:9000/user/export");
+        },
+
+        handleExcelImportS() {
+          this.$message.success("文件导入成功");
+          this.load();
         },
 
     }
