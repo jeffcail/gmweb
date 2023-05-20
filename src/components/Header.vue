@@ -13,11 +13,13 @@
         </div>
 
           <el-dropdown style="width: 100px; cursor: pointer;">
-            <span>王小虎</span><i class="el-icon-arrow-down" style="margin-left: 5px;"></i>
+            <img src="../assets/images/avator.jpeg" alt="" style="width: 30px; border-radius: 50%; position: relative; top: 10px; right: 5px;"></img>
+            <span>菜小新</span><i class="el-icon-arrow-down" style="margin-left: 5px;"></i>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>个人信息</el-dropdown-item>
-              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item>
+                <router-link to="/login">退出</router-link></el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
@@ -33,6 +35,13 @@ export default {
         collapse: Boolean,
     },
 
+    // methods: {
+    //   logout() {
+    //     console.log("logout");
+    //     this.$router.push("/login");
+    //   }
+    // },
+
     computed: {
       currentPathName() {
         return this.$store.state.currentPathName;
@@ -44,6 +53,8 @@ export default {
         // console.log(newVal);
       }
     },
+
+  
 
 }
 </script>
