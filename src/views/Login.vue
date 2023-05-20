@@ -51,10 +51,12 @@ export default {
             this.$refs['userForm'].validate((valid) => {
                 if (valid) {
                     this.request.post("/user/login", this.user).then(res => {
-                        if (!res) {
-                            this.$message.error("用户名或密码错误");
+                        // console.log(res);
+                        if (res.code !== "200") { 
+                            this.$message.error(res.msg);
                         } else {
-                            this.$message.success("登陆成功");
+                            localStorage.setItem("user", JSON.stringify(res.data));
+                            this.$message.success(res.msg);
                             this.$router.push("/");
                         }
                     })

@@ -12,14 +12,14 @@
             </el-breadcrumb>
         </div>
 
-          <el-dropdown style="width: 100px; cursor: pointer;">
-            <img src="../assets/images/avator.jpeg" alt="" style="width: 30px; border-radius: 50%; position: relative; top: 10px; right: 5px;"></img>
-            <span>菜小新</span><i class="el-icon-arrow-down" style="margin-left: 5px;"></i>
+          <el-dropdown style="width: 130px; cursor: pointer;">
+            <img src="../assets/images/avator.jpeg" alt="" style="width: 30px; border-radius: 50%; position: relative; top: 10px; right: 5px;"/>
+            <span>{{ user.nickname }}</span><i class="el-icon-arrow-down" style="margin-left: 5px;"></i>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>个人信息</el-dropdown-item>
               <el-dropdown-item>
-                <router-link to="/login">退出</router-link></el-dropdown-item>
+                <span @click="logout" style="text-decoration: none;">退出</span></el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
@@ -35,12 +35,18 @@ export default {
         collapse: Boolean,
     },
 
-    // methods: {
-    //   logout() {
-    //     console.log("logout");
-    //     this.$router.push("/login");
-    //   }
-    // },
+    data() {
+      return {
+        user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+      }
+    },
+
+    methods: {
+      logout() {
+        localStorage.removeItem("user");
+        this.$router.push("/login");
+      }
+    },
 
     computed: {
       currentPathName() {
